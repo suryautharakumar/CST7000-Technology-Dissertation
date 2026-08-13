@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="mb-3">Upload Dataset</h2>
+                <p class="text-muted">Upload a structured dataset in CSV or Excel format. The dataset must contain at least one feature column and one target column.</p>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Choose CSV or Excel file</label>
+                        <input class="form-control form-control-lg" type="file" name="dataset" accept=".csv,.xlsx" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">Upload Dataset</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

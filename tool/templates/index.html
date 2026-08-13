@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="hr" class="hero rounded-4 p-5 mb-4 text-white">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h1 class="display-5 fw-bold">Automated Predictive Analysis AI Software Tool</h1>
+            <p class="lead mt-3">Upload structured data, automatically preprocess it, train multiple machine learning models, and identify the best predictive model.</p>
+            <a href="{{ url_for('upload') }}" class="btn btn-light btn-lg mt-2">Get Started</a>
+        </div>
+    </div>
+</section>
+
+<div class="row g-4">
+    <div class="col-md-4"><div class="card h-100 shadow-sm"><div class="card-body"><h5>1. Upload Dataset</h5><p>Upload CSV or Excel files containing structured tabular data.</p></div></div></div>
+    <div class="col-md-4"><div class="card h-100 shadow-sm"><div class="card-body"><h5>2. Automatic Preprocessing</h5><p>Handle missing values, encode categorical columns, scale numeric features, and split data.</p></div></div></div>
+    <div class="col-md-4"><div class="card h-100 shadow-sm"><div class="card-body"><h5>3. Model Comparison</h5><p>Train classification or regression models and compare their performance metrics.</p></div></div></div>
+</div>
+
+<div class="card mt-4 shadow-sm">
+    <div class="card-body">
+        <h4>Workflow</h4>
+        <div class="workflow mt-3">Upload → Preview → Select Target → Preprocess → Train Models → Results → Feature Importance → Prediction</div>
+    </div>
+</div>
+{% endblock %}

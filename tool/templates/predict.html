@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Make New Prediction</h2>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <p><strong>Best Model:</strong> {{ best_model }} | <strong>Task:</strong> {{ problem_type.title() }}</p>
+        <form method="post">
+            <div class="row g-3">
+                {% for feature in features %}
+                <div class="col-md-6">
+                    <label class="form-label">{{ feature }}</label>
+                    <input type="text" class="form-control" name="{{ feature }}" value="{{ sample_values.get(feature, '') }}" required>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-success btn-lg mt-4">Predict</button>
+        </form>
+    </div>
+</div>
+
+{% if prediction is not none %}
+<div class="alert alert-primary fs-5">
+    <strong>Prediction Result:</strong> {{ prediction }}
+    {% if probability is not none %}<br><strong>Confidence:</strong> {{ probability }}%{% endif %}
+</div>
+{% endif %}
+{% endblock %}

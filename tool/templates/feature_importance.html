@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Feature Importance</h2>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <p><strong>Best Model:</strong> {{ best_model }}</p>
+        {% if importance %}
+        <p class="text-muted">Feature importance shows which columns had the strongest influence on the model's prediction.</p>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead><tr><th>Feature</th><th>Importance</th></tr></thead>
+                <tbody>
+                {% for item in importance %}
+                    <tr><td>{{ item.feature }}</td><td>{{ item.importance }}</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <canvas id="importanceChart" height="100"></canvas>
+        {% else %}
+        <div class="alert alert-info">Feature importance is available mainly for tree-based models such as Decision Tree, Random Forest, and Gradient Boosting. The selected best model does not provide direct feature importance.</div>
+        {% endif %}
+        <a href="{{ url_for('predict') }}" class="btn btn-primary mt-3">Make Prediction</a>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% if importance %}
+<script>
+const fLabels = {{ importance | map(attribute='feature') | list | tojson }};
+const fValues = {{ importance | map(attribute='importance') | list | tojson }};
+new Chart(document.getElementById('importanceChart'), {
+    type: 'bar',
+    data: { labels: fLabels, datasets: [{ label: 'Importance', data: fValues }] },
+    options: { indexAxis: 'y', responsive: true, scales: { x: { beginAtZero: true } } }
+});
+</script>
+{% endif %}
+{% endblock %}

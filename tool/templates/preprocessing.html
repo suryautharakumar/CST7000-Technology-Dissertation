@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Preprocessing Summary</h2>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-4"><div class="stat-card"><strong>{{ summary.problem_type }}</strong><span>Detected Task</span></div></div>
+            <div class="col-md-4"><div class="stat-card"><strong>{{ summary.target_column }}</strong><span>Target Column</span></div></div>
+            <div class="col-md-4"><div class="stat-card"><strong>{{ summary.feature_columns }}</strong><span>Feature Columns</span></div></div>
+        </div>
+        <hr>
+        <p><strong>Numeric columns:</strong> {{ summary.numeric_columns }}</p>
+        <p><strong>Categorical columns:</strong> {{ summary.categorical_columns }}</p>
+        <p><strong>Missing values before preprocessing:</strong> {{ summary.missing_before }}</p>
+        <h5 class="mt-4">Automatic preprocessing steps</h5>
+        <ul>
+            {% for step in summary.steps %}<li>{{ step }}</li>{% endfor %}
+        </ul>
+        <a href="{{ url_for('train') }}" class="btn btn-success btn-lg mt-3">Train Models</a>
+    </div>
+</div>
+{% endblock %}

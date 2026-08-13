@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Model Results Dashboard</h2>
+<div class="alert alert-success"><strong>Best Model:</strong> {{ best_model_name }} | <strong>Task:</strong> {{ problem_type.title() }}</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-bold">Model Comparison Table</div>
+    <div class="card-body table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    {% for key in metrics[0].keys() %}<th>{{ key }}</th>{% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in metrics %}
+                <tr class="{% if row['Model'] == best_model_name %}table-success fw-bold{% endif %}">
+                    {% for value in row.values() %}<td>{{ value }}</td>{% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-bold">Model Performance Chart ({{ chart_metric }})</div>
+    <div class="card-body"><canvas id="resultsChart" height="100"></canvas></div>
+</div>
+
+<div class="d-flex gap-2">
+    <a href="{{ url_for('feature_importance') }}" class="btn btn-outline-primary">View Feature Importance</a>
+    <a href="{{ url_for('predict') }}" class="btn btn-primary">Make New Prediction</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const labels = {{ chart_labels | tojson }};
+const values = {{ chart_values | tojson }};
+const metric = {{ chart_metric | tojson }};
+new Chart(document.getElementById('resultsChart'), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ label: metric, data: values }] },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+});
+</script>
+{% endblock %}
